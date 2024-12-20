@@ -81,6 +81,14 @@
       </plugin>
 
     </plugins>
+    <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>4.8.6.5</version>
+        <configuration>
+          <includeTests>true</includeTests>
+        </configuration>
+      </plugin>
   </build>
 
   <reporting><!-- on indique ici les rapports qu'on veut obtenir lors de la phase de generation de rapports -->
@@ -134,14 +142,7 @@
         <artifactId>maven-surefire-report-plugin</artifactId>
         <version>3.1.2</version>
       </plugin>
-      <plugin>
-        <groupId>com.github.spotbugs</groupId>
-        <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.8.6.5</version>
-        <configuration>
-          <includeTests>true</includeTests>
-        </configuration>
-      </plugin>
+      
     </plugins>
   </reporting>
 
