@@ -5,6 +5,11 @@ public class ElementDeGrilleImplAsChar implements ElementDeGrille{
         return 0;
     }
 
+
+    public boolean isPossible(int x, int y) throws HorsBornesException, ElementInterditException {
+        return null;
+    }
+
     
     public ElementDeGrille getValue(int x, int y) throws HorsBornesException {
         return null;
