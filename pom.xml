@@ -15,6 +15,13 @@
       <version>5.10.0</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+           <groupId>emiage.c306.sudoku</groupId>
+           <artifactId>sudokulib</artifactId>
+           <version>1.0-SNAPSHOT</version>
+           <scope>system</scope>
+           <systemPath>${project.basedir}/lib/sudokulib-1.0-SNAPSHOT.jar</systemPath>
+   </dependency>
   </dependencies>
 
   <build>
