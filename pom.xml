@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <name>MyProject</name>
+  <description>Mon nouveau projet</description>
+  <version>1.2</version>
+  <groupId>default</groupId>
+  <artifactId>my-project</artifactId>
+
+  <dependencies><!-- dependendance du projet -->
+    <dependency><!-- bibliotheque junit -->
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.10.0</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins><!-- lister les plugins et leur version permet d'eviter que maven prenne celui qui trouvera par defaut -->
+
+      <plugin><!-- pour compiler -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+	<configuration>
+	  <source>11</source>
+	  <target>11</target>
+	</configuration>
+      </plugin>
+
+      <plugin>
+	<artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.4.5</version>
+      </plugin>
+
+      <plugin><!-- pour l'execution des tests -->
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-surefire-plugin</artifactId>
+	<version>3.1.2</version>
+	<configuration>
+	  <testFailureIgnore>true</testFailureIgnore>
+	</configuration>
+      </plugin>
+      
+      <plugin><!-- pour la generation de rapports -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>4.0.0-M10</version>
+        <configuration>
+          <locales>fr,en</locales><!-- en francais par defaut -->
+        </configuration>
+      </plugin>
+
+      <plugin><!-- pour la couverture de code avec JaCoco lors de l'exécution des tests JUnit -->
+	<groupId>org.jacoco</groupId>
+	<artifactId>jacoco-maven-plugin</artifactId>
+	<version>0.8.10</version>
+	<executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+	</executions>
+      </plugin>
+
+
+      <plugin><!-- pour l'analyse avec checkstyle -->
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-checkstyle-plugin</artifactId>
+	<version>3.3.0</version>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <reporting><!-- on indique ici les rapports qu'on veut obtenir lors de la phase de generation de rapports -->
+    <plugins>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+
+
+      <plugin><!-- pour avoir le rapport checkstyle -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>checkstyle</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+
+      <plugin><!-- pour avoir le lien au code source dans les rapports -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>3.3.0</version>
+      </plugin>
+      
+      <plugin><!-- pour la verification du code avec PMD -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.25.0</version>
+        <configuration>
+          <includeTests>true</includeTests>
+        </configuration>
+      </plugin>
+
+      <plugin><!-- pour avoir le rapport surfire (execution des tests) -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>3.1.2</version>
+      </plugin>
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>4.8.6.5</version>
+        <configuration>
+          <includeTests>true</includeTests>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <properties>
+    <!-- encodage du code source -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+</project>
