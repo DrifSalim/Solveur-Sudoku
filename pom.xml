@@ -79,9 +79,7 @@
 	<artifactId>maven-checkstyle-plugin</artifactId>
 	<version>3.3.0</version>
       </plugin>
-
-    </plugins>
-    <plugin>
+      <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
         <version>4.8.6.5</version>
@@ -89,6 +87,8 @@
           <includeTests>true</includeTests>
         </configuration>
       </plugin>
+    </plugins>
+    
   </build>
 
   <reporting><!-- on indique ici les rapports qu'on veut obtenir lors de la phase de generation de rapports -->
