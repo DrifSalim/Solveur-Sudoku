@@ -63,7 +63,7 @@
       <plugin><!-- pour la couverture de code avec JaCoco lors de l'exécution des tests JUnit -->
 	<groupId>org.jacoco</groupId>
 	<artifactId>jacoco-maven-plugin</artifactId>
-	<version>0.8.10</version>
+	<version>0.8.12</version>
 	      <configuration>
                     <formats>
                         <format>XML</format>
