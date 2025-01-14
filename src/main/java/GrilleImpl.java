@@ -1,4 +1,7 @@
 import emiage.c306.sudoku.ElementDeGrille;
+
+import java.util.Set;
+
 import emiage.c306.sudoku.*;
 public class GrilleImpl implements Grille{
     public int getDimension(){
