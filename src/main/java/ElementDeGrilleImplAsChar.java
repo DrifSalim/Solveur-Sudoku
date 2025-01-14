@@ -1,6 +1,6 @@
 import emiage.c306.sudoku.ElementDeGrille;
 import emiage.c306.sudoku.*;
-public class ElementDeGrilleImplAsChar implements ElementDeGrille{
+public class ElementDeGrilleImplAsChar implements Grille{
     public int getDimension(){
         return 0;
     }
