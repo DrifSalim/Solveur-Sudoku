@@ -4,14 +4,11 @@ public class ElementDeGrilleImplAsChar implements ElementDeGrille{
     public int getDimension(){
         return 0;
     }
-
-
     public boolean isPossible(int x, int y) throws HorsBornesException, ElementInterditException {
-        return null;
+        return false;
     }
-
-    
     public ElementDeGrille getValue(int x, int y) throws HorsBornesException {
         return null;
     }
+    
 }
