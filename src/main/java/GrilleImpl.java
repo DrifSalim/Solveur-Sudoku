@@ -4,7 +4,8 @@ public class GrilleImpl implements Grille{
     public int getDimension(){
         return 0;
     }
-    public boolean isPossible(int x, int y, ElementDeGrille value)
+    public boolean isPossible(int x, int y, ElementDeGrille value) throws HorsBornesException,
+    ElementInterditException
     {
         return false;
     }
@@ -20,7 +21,8 @@ public class GrilleImpl implements Grille{
     public boolean isValeurInitiale(int x, int y){
         return false;
     }
-    public void setValue(int x, int y, ElementDeGrille value){
+    public void setValue(int x, int y, ElementDeGrille value) throws HorsBornesException, 
+    ValeurImpossibleException, ElementInterditException, ValeurInitialeModificationException{
 
     }
 }
