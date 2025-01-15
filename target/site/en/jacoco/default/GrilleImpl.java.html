@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GrilleImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyProject</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">GrilleImpl.java</span></div><h1>GrilleImpl.java</h1><pre class="source lang-java linenums">import emiage.c306.sudoku.*;
+import java.util.HashSet;
+import java.util.Set;
+
+public class GrilleImpl implements Grille {
+  private ElementDeGrille[][] grille;
+  private boolean[][] valeursInitiales;
+  private ElementDeGrille[] elements;
+  private final int dimension;
+
+<span class="fc" id="L11">  public GrilleImpl(ElementDeGrille[] elementDeGrilles) {</span>
+<span class="fc" id="L12">    this.elements = elementDeGrilles;</span>
+<span class="fc" id="L13">    this.dimension = elementDeGrilles.length;</span>
+<span class="fc" id="L14">    this.grille = new ElementDeGrille[dimension][dimension];</span>
+<span class="fc" id="L15">    this.valeursInitiales = new boolean[dimension][dimension];</span>
+<span class="fc" id="L16">  }</span>
+
+  public GrilleImpl(ElementDeGrille[] elementDeGrilles, ElementDeGrille[][] grilleTab) 
+  throws HorsBornesException, ElementInterditException, ValeurImpossibleException {
+<span class="fc" id="L20">    this(elementDeGrilles);</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">    for (int i = 0; i &lt; dimension; i++) {</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">      for (int j = 0; j &lt; dimension; j++) {</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        if( this.isPossible(i, j, grilleTab[i][j]) ){</span>
+<span class="fc" id="L24">          this.grille[i][j] = grilleTab[i][j];</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">          this.valeursInitiales[i][j] = (grilleTab[i][j] != null);</span>
+<span class="fc" id="L26">        }else{</span>
+<span class="fc" id="L27">          throw new ValeurImpossibleException(&quot;Valeur impossible&quot;);</span>
+        }
+      }
+    }
+<span class="fc" id="L31">  }</span>
+
+  @Override
+  public int getDimension() {
+<span class="fc" id="L35">    return dimension;</span>
+  }
+
+  @Override
+  public boolean isPossible(int x, int y, ElementDeGrille value)
+      throws HorsBornesException, ElementInterditException {
+    // Vérification des bornes
+<span class="pc bpc" id="L42" title="3 of 8 branches missed.">    if (x &lt; 0 || x &gt;= dimension || y &lt; 0 || y &gt;= dimension) {</span>
+<span class="fc" id="L43">      throw new HorsBornesException(&quot;Hors borns exception: x=&quot;+x+&quot; y=&quot;+y);</span>
+    }
+<span class="pc bpc" id="L45" title="1 of 4 branches missed.">    if(value==null &amp;&amp; this.valeursInitiales[x][y] == false){</span>
+<span class="fc" id="L46">         return true;</span>
+    }
+    // Vérification de l'élément
+<span class="fc bfc" id="L49" title="All 2 branches covered.">    if (!getElements().contains(value)) {</span>
+<span class="fc" id="L50">      throw new ElementInterditException(&quot;ElementInterditException exception: &quot;+value);</span>
+    }
+
+    // Vérification ligne
+<span class="fc bfc" id="L54" title="All 2 branches covered.">    for (int i = 0; i &lt; this.getDimension(); i++) {</span>
+<span class="fc bfc" id="L55" title="All 4 branches covered.">      if (grille[x][i] != null &amp;&amp; grille[x][i].equals(value)) {</span>
+<span class="fc" id="L56">        return false;</span>
+      }
+    }
+
+    // Vérification colonne
+<span class="fc bfc" id="L61" title="All 2 branches covered.">    for (int i = 0; i &lt; dimension; i++) {</span>
+<span class="fc bfc" id="L62" title="All 4 branches covered.">      if (grille[i][y] != null &amp;&amp; grille[i][y].equals(value)) {</span>
+<span class="fc" id="L63">        return false;</span>
+      }
+    }
+
+    // Vérification carré
+<span class="fc" id="L68">    int squareSize = (int) Math.sqrt(dimension);</span>
+<span class="fc" id="L69">    int startX = (x / squareSize) * squareSize;</span>
+<span class="fc" id="L70">    int startY = (y / squareSize) * squareSize;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">    for (int i = startX; i &lt; startX + squareSize; i++) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">      for (int j = startY; j &lt; startY + squareSize; j++) {</span>
+<span class="fc bfc" id="L73" title="All 4 branches covered.">        if (grille[i][j] != null &amp;&amp; grille[i][j].equals(value)) {</span>
+<span class="fc" id="L74">          return false;</span>
+        }
+      }
+    }
+
+<span class="fc" id="L79">    return true;</span>
+  }
+
+  @Override
+  public ElementDeGrille getValue(int x, int y) throws HorsBornesException {
+<span class="fc bfc" id="L84" title="All 8 branches covered.">    if (x &lt; 0 || x &gt;= dimension || y &lt; 0 || y &gt;= dimension) {</span>
+<span class="fc" id="L85">      throw new HorsBornesException(&quot;Valeur impossible&quot;);</span>
+    }
+<span class="fc" id="L87">    return grille[x][y];</span>
+  }
+
+  @Override
+  public Set&lt;ElementDeGrille&gt; getElements() {
+<span class="fc" id="L92">    Set&lt;ElementDeGrille&gt; elementSet = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">    for (ElementDeGrille element : elements) {</span>
+<span class="fc" id="L94">      elementSet.add(element);</span>
+    }
+<span class="fc" id="L96">    return elementSet;</span>
+  }
+
+  @Override
+  public boolean isComplete() {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">    for (int i = 0; i &lt; dimension; i++) {</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">      for (int j = 0; j &lt; dimension; j++) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (grille[i][j] == null) {</span>
+<span class="fc" id="L104">          return false;</span>
+        }
+      }
+    }
+<span class="fc" id="L108">    return true;</span>
+  }
+
+  @Override
+  public boolean isValeurInitiale(int x, int y) {
+<span class="fc" id="L113">    return valeursInitiales[x][y];</span>
+  }
+
+  @Override
+  public void setValue(int x, int y, ElementDeGrille value)
+      throws HorsBornesException, ValeurImpossibleException,
+      ElementInterditException, ValeurInitialeModificationException {
+
+<span class="pc bpc" id="L121" title="3 of 8 branches missed.">    if (x &lt; 0 || x &gt;= dimension || y &lt; 0 || y &gt;= dimension) {</span>
+<span class="fc" id="L122">      throw new HorsBornesException(&quot;erreur hors bornes&quot;);</span>
+    }
+
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">    if (isValeurInitiale(x, y)) {</span>
+<span class="nc" id="L126">      throw new ValeurInitialeModificationException(&quot;Valeur initial erreur&quot;);</span>
+    }
+
+<span class="fc bfc" id="L129" title="All 2 branches covered.">    if (value != null) {</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">      if (!getElements().contains(value)) {</span>
+<span class="fc" id="L131">        throw new ElementInterditException(&quot;Element interdit erreur&quot;);</span>
+      }
+
+<span class="fc bfc" id="L134" title="All 2 branches covered.">      if (!isPossible(x, y, value)) {</span>
+<span class="fc" id="L135">        throw new ValeurImpossibleException(&quot;Erreur valeur impossible: &quot;+value);</span>
+      }
+    }
+
+<span class="fc" id="L139">    grille[x][y] = value;</span>
+<span class="fc" id="L140">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

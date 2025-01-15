@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd xmlns="https://pmd-code.org/schema/cpd-report"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         pmdVersion="7.3.0"
+         timestamp="2025-01-15T11:06:04.282539207Z"
+         version="1.0.0"
+         xsi:schemaLocation="https://pmd-code.org/schema/cpd-report https://pmd.github.io/schema/cpd-report_1_0_0.xsd">
+   <file path="/home/debian/Bureau/isi05-2024-2025-M/src/main/java/ElementDeGrilleImplAsChar.java"
+         totalNumberOfTokens="79"/>
+   <file path="/home/debian/Bureau/isi05-2024-2025-M/src/main/java/GrilleImpl.java"
+         totalNumberOfTokens="787"/>
+   <file path="/home/debian/Bureau/isi05-2024-2025-M/src/main/java/GrilleParser.java"
+         totalNumberOfTokens="359"/>
+   <file path="/home/debian/Bureau/isi05-2024-2025-M/src/main/java/package-info.java"
+         totalNumberOfTokens="0"/>
+   <file path="/home/debian/Bureau/isi05-2024-2025-M/src/test/java/GrilleTest.java"
+         totalNumberOfTokens="686"/>
+   <file path="/home/debian/Bureau/isi05-2024-2025-M/src/test/java/package-info.java"
+         totalNumberOfTokens="0"/>
+</pmd-cpd>

@@ -7,14 +7,20 @@ import java.io.InputStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GrilleTest {
-  ElementDeGrille e9 = new ElementDeGrilleImplAsChar('9');
-
+  GrilleImpl grille;
   @BeforeEach
-  public void setUp() {}
+  public void setUp() {
+  }
 
   @Test
-  public void testDimensionGrille() {
-    assertEquals(9, grille.getDimension());
+  public void testDimensionGrille() throws Exception{
+    Grille grille = read("/grilles/sudoku4.txt");
+    assertEquals(4, grille.getDimension());
+  }
+
+  @Test
+  public void testConstructionGrilleIncorrecte() throws Exception{
+    assertThrows(ValeurImpossibleException.class,()-> read("/grilles/sudoku4 invalid.txt"));
   }
 
   private Grille read(String path) throws Exception {
@@ -36,7 +42,7 @@ public class GrilleTest {
     Grille grille = read("/grilles/sudoku9vide.txt");
     // Test case vide
     assertNull(grille.getValue(0, 0));
-    assertEquals(3, grille.getValue(3, 3));
+    assertNull(grille.getValue(3, 3));
     // Test coordonnées hors bornes
     assertThrows(HorsBornesException.class, () -> grille.getValue(-1, 0));
     assertThrows(HorsBornesException.class, () -> grille.getValue(0, -1));
@@ -45,21 +51,23 @@ public class GrilleTest {
   }
 
   @Test
-  public void testSetAndGetValue() throws HorsBornesException, ValeurImpossibleException, ElementInterditException, ValeurInitialeModificationException {
+  public void testSetAndGetValue() throws Exception {
+    Grille grille = read("/grilles/sudoku9vide.txt");
+    ElementDeGrille elementDeGrille = grille.getElements().iterator().next();
     // Test insertion normale
-    grille.setValue(0, 0, e1);
-    assertEquals(e1, grille.getValue(0, 0));
+    grille.setValue(0, 0, elementDeGrille);
+    assertEquals(elementDeGrille, grille.getValue(0, 0));
 
     // Test avec null (vider une case)
     grille.setValue(0, 0, null);
     assertNull(grille.getValue(0, 0));
-
+    grille.setValue(0, 0, elementDeGrille);
+    assertEquals(elementDeGrille, grille.getValue(0, 0));
     // Test exceptions
-    assertThrows(HorsBornesException.class, () -> grille.setValue(-1, 0, e1));
+    assertThrows(HorsBornesException.class, () -> grille.setValue(-1, 0,elementDeGrille ));
 
     // Test valeur impossible (même ligne)
-    grille.setValue(0, 0, e1);
-    assertThrows(ValeurImpossibleException.class, () -> grille.setValue(0, 1, e1));
+    assertThrows(ValeurImpossibleException.class, () -> grille.setValue(0, 1, elementDeGrille));
 
     // Test élément interdit
     ElementDeGrille elementInterdit = new ElementDeGrilleImplAsChar('X');
@@ -67,7 +75,10 @@ public class GrilleTest {
   }
 
   @Test
-  public void testIsPossible() throws HorsBornesException, ElementInterditException, ValeurImpossibleException, ValeurInitialeModificationException {
+  public void testIsPossible() throws Exception {
+    
+    Grille grille = read("/grilles/sudoku9vide.txt");
+    ElementDeGrille e1 = grille.getElements().iterator().next();
     // Test case vide
     assertTrue(grille.isPossible(0, 0, e1));
 
@@ -83,7 +94,10 @@ public class GrilleTest {
   }
 
   @Test
-  public void testElementInterdit() {
+  public void testElementInterdit() throws Exception {
+    Grille grille = read("/grilles/sudoku9vide.txt");
+    ElementDeGrille e1 = grille.getElements().iterator().next();
+   
     // Test élément interdit
     ElementDeGrille elementInterdit = new ElementDeGrilleImplAsChar('X');
     assertThrows(ElementInterditException.class, () -> grille.isPossible(0, 0, elementInterdit));
@@ -93,14 +107,18 @@ public class GrilleTest {
   }
 
   @Test
-  public void testIsComplete() throws HorsBornesException, ValeurImpossibleException, ElementInterditException, ValeurInitialeModificationException {
-    // Test grille vide
+  public void testIsComplete() throws Exception {
+    
+    Grille grille = read("/grilles/sudoku9vide.txt");
+    ElementDeGrille e1 = grille.getElements().iterator().next();
+   // Test grille vide
     assertFalse(grille.isComplete());
 
     // Test grille partiellement remplie
     grille.setValue(0, 0, e1);
     assertFalse(grille.isComplete());
 
+    grille = read("/grilles/sudoku4-complete.txt");
     // Test grille complète
     assertTrue(grille.isComplete());
   }
