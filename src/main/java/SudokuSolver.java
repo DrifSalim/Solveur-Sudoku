@@ -10,6 +10,7 @@ public class SudokuSolver {
     public boolean solve(Grille grille) throws HorsBornesException, ValeurImpossibleException, 
         ElementInterditException, ValeurInitialeModificationException {
         // Trouver une case vide
+        
         for (int i = 0; i < grille.getDimension(); i++) {
             for (int j = 0; j < grille.getDimension(); j++) {
                 if (grille.getValue(i, j) == null) {
