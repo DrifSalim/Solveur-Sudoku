@@ -18,13 +18,14 @@ public class GrilleImpl implements Grille {
   public GrilleImpl(ElementDeGrille[] elementDeGrilles, ElementDeGrille[][] grilleTab) 
   throws HorsBornesException, ElementInterditException, ValeurImpossibleException {
     this(elementDeGrilles);
+    //faut rajouter le test si elle n'est pas déja complète
     for (int i = 0; i < dimension; i++) {
       for (int j = 0; j < dimension; j++) {
         if( this.isPossible(i, j, grilleTab[i][j]) ){
           this.grille[i][j] = grilleTab[i][j];
           this.valeursInitiales[i][j] = (grilleTab[i][j] != null);
         }else{
-          throw new ValeurImpossibleException("Valeur impossible");
+          throw new ValeurImpossibleException("Valeur impossible : "+grilleTab[i][j]);
         }
       }
     }
@@ -40,14 +41,14 @@ public class GrilleImpl implements Grille {
       throws HorsBornesException, ElementInterditException {
     // Vérification des bornes
     if (x < 0 || x >= dimension || y < 0 || y >= dimension) {
-      throw new HorsBornesException("Hors borns exception: x="+x+" y="+y);
+      throw new HorsBornesException("Hors borns exception: x= "+x+" y= "+y);
     }
     if(value==null && this.valeursInitiales[x][y] == false){
          return true;
     }
     // Vérification de l'élément
     if (!getElements().contains(value)) {
-      throw new ElementInterditException("ElementInterditException exception: "+value);
+      throw new ElementInterditException("ElementInterditException : "+value);
     }
 
     // Vérification ligne
@@ -82,7 +83,7 @@ public class GrilleImpl implements Grille {
   @Override
   public ElementDeGrille getValue(int x, int y) throws HorsBornesException {
     if (x < 0 || x >= dimension || y < 0 || y >= dimension) {
-      throw new HorsBornesException("Valeur impossible");
+      throw new HorsBornesException("HorsBonesException x:"+x+" y:"+y);
     }
     return grille[x][y];
   }
@@ -119,16 +120,17 @@ public class GrilleImpl implements Grille {
       ElementInterditException, ValeurInitialeModificationException {
 
     if (x < 0 || x >= dimension || y < 0 || y >= dimension) {
-      throw new HorsBornesException("erreur hors bornes");
+      throw new HorsBornesException("erreur hors bornes, x:"+x+" y:"+y);
     }
 
     if (isValeurInitiale(x, y)) {
-      throw new ValeurInitialeModificationException("Valeur initial erreur");
+      throw new ValeurInitialeModificationException("Cette case x:"+x+" y:"+y+
+      " est une valeur initial de la grille que vous ne pouvez pas modifier");
     }
 
     if (value != null) {
       if (!getElements().contains(value)) {
-        throw new ElementInterditException("Element interdit erreur");
+        throw new ElementInterditException("Element interdit erreur : "+value);
       }
 
       if (!isPossible(x, y, value)) {
