@@ -20,7 +20,7 @@ import java.util.Map;
  * 3--4
  * -1-2
  *
- * @author Sébastien Choplin <sebastien.choplin@u-picardie.fr>
+ * @author Sébastien Choplin sebastien.choplin@u-picardie.fr
  */
 public class GrilleParser {
 
